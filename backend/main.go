@@ -121,6 +121,6 @@ func main() {
 	fmt.Println("Hello world")
 
 	r := gin.Default()
-	r.GET("/", GetOrders)
+	r.GET("/orders", GetOrders)
 	r.Run()
 }
