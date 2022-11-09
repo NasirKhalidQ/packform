@@ -49,7 +49,7 @@ export default function Orders() {
       : "2022-01-01";
     try {
       const response = await axios({
-        url: "http://localhost:8080/orders",
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/orders`,
         method: "get",
         params: {
           keyword: debouncedKeyword,
