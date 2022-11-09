@@ -108,6 +108,10 @@ You will see this error as backend is not setup yet
 - Relaunch VScode, open the backend directory as workspace inside packform folder
 - You might see some prompts/errors in VScode as files might be missing, accept all to fix those errors
 - Run this command to get all packages `go get`, then run `go mod tidy`
+- Change the DATABASE_URL to use your username as user and dbname
+
+<img width="1474" alt="image" src="https://user-images.githubusercontent.com/75773436/200929347-20eac8e8-1877-4753-939b-f90bd8b0e8a7.png">
+
 - Run this command to start the server `go run main.go`, this will initialize the database by creating tables and populating them with the data from the csv file included in the initialize folder, then it will start listening on port 8080 for incoming http requests
   <img width="1103" alt="image" src="https://user-images.githubusercontent.com/75773436/200922214-0b493c70-6a67-4525-87fb-25a3e8ced7b8.png">
 
