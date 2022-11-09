@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import {
   DatePicker,
   Form,
@@ -15,6 +17,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import styles from "../../styles/Orders.module.css";
+import { useDebounce } from "../../hooks";
 
 moment.tz.setDefault("Australia/Melbourne");
 
@@ -33,6 +36,8 @@ export default function Orders() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const keyword = Form.useWatch("keyword", form);
+  const debouncedKeyword = useDebounce(keyword, 500);
+
   const dates = Form.useWatch("dates", form);
 
   async function getUser() {
@@ -47,7 +52,7 @@ export default function Orders() {
         url: "http://localhost:8080/orders",
         method: "get",
         params: {
-          keyword,
+          keyword: debouncedKeyword,
           startDate,
           endDate,
           offset: (currentPage - 1) * 5,
@@ -66,7 +71,7 @@ export default function Orders() {
     }
   }
   const ordersResult = useQuery(
-    ["orders", keyword, dates?.[0], dates?.[1], currentPage],
+    ["orders", debouncedKeyword, dates?.[0], dates?.[1], currentPage],
     getUser,
     { keepPreviousData: true }
   );
@@ -143,7 +148,7 @@ export default function Orders() {
             <Typography.Title>Search</Typography.Title>
           </Row>
           <Form.Item name="keyword">
-            <Input size="large" />
+            <Input size="large" onChange={() => setCurrentPage(1)} />
           </Form.Item>
         </div>
         <div>
