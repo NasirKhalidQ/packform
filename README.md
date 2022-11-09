@@ -90,9 +90,20 @@ Total amount at top is the aggregate of the total amounts from displayed orders 
 
 <br>
 You will see this error as backend is not setup yet
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200916416-dfae80ca-c861-4cfc-986e-74ba914023e4.png">
 
 <br>
 
 ## Backend-- PostgreSQL with GO 😨
 
--
+- Install PostgresAPP from [https://postgresapp.com/](https://postgresapp.com/)
+- Click on initialize to initialize a db with your username as the database, then click start to start the server for Postgres
+<img width="718" alt="image" src="https://user-images.githubusercontent.com/75773436/200918140-c8b8dca3-a71b-46db-b863-41fe83d075f6.png">
+- These are the default settings for Postgres
+<img width="759" alt="image" src="https://user-images.githubusercontent.com/75773436/200918486-cda68afe-0104-4ea0-b45b-9b530a018316.png">
+- psql comes bundled with PostgresAPP but you need to set the path using
+`sudo mkdir -p /etc/paths.d &&
+echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
+- Check if it is installed by typing `psql` in the terminal, you should see this if path was successfully set:
+<img width="986" alt="image" src="https://user-images.githubusercontent.com/75773436/200917733-2ed4bc79-6446-491a-9d6c-96ce8f53c9b9.png">
+
