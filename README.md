@@ -19,7 +19,7 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 - Maximum of 5 orders per page
 - Switch between pages using forward, back button as well as jump to any page number
 - Details displayed for each order; Order name, Customer Company name , Customer name, Order date (Melbourne/Australia TZ), Delivered amount (dash if nothing is delivered) , Total amount
-- Keyword has been debounced at 500ms to avoid server crashing from concurrent requests
+- Keyword has been debounced at 500ms to avoid server crashing from concurrent http requests
 
 
 ## Not Completed / Work In Progress ❌
@@ -100,4 +100,21 @@ You will see this error as backend is not setup yet
 echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
 - Check if it is installed by typing `psql` in the terminal, you should see this if path was successfully set:
 <img width="986" alt="image" src="https://user-images.githubusercontent.com/75773436/200917733-2ed4bc79-6446-491a-9d6c-96ce8f53c9b9.png">
+- Optional--Install pgadmin4 from [https://www.pgadmin.org/](https://www.pgadmin.org/) if you would prefer a GUI to see/drop the tables and make queries directly for testing
+- Download and install GO from [https://go.dev/doc/install](https://go.dev/doc/install)
+- Verify GO is installed by running `go --version` in terminal, you should see something like this 
+<img width="984" alt="image" src="https://user-images.githubusercontent.com/75773436/200920251-e94e60e2-f321-41c9-8ad2-8e3f02839da1.png">
+- Close VScode and relaunch it, open the backend directory as workspace inside packform folder
+- You might see some prompts/errors in VScode as files might be missing, accept all to fix those errors
+- Run this command to get all packages `go get`, then run `go mod tidy`
+- Run this command to start the server `go run main.go`, this will initialize the database by creating tables and populating them with the data from the csv file included in the initialize folder, then it will start listening on port 8080 for incoming http requests
+<img width="1103" alt="image" src="https://user-images.githubusercontent.com/75773436/200922214-0b493c70-6a67-4525-87fb-25a3e8ced7b8.png">
+
+Verify if everything was setup and server is returning json responses by testing a GET request using Postman with query params
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200922581-e5786286-e2e9-4976-9bf0-0b470010e92f.png">
+
+All fields are optional and results will still be returned if params are omitted
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200922757-2ea62ae1-c6b5-4fc8-a5ab-a3ab03773474.png">
+
+Thank you for reading all the way down!! 👍
 
