@@ -4,7 +4,7 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 
 ## Libraries used 📚
 
-- [NextJS](https://nextjs.org) with [Typescript](https://www.typescriptlang.org)
+- [NextJS](https://nextjs.org) with [Typescript](https://www.typescriptlang.org)💪
 - [Antd](https://ant.design/components/overview/) as component library
 - [React-Query](https://react-query-v3.tanstack.com/) for data fetching, handling pagination, keyword search
 - [MomentJS](https://momentjs.com/timezone/) for handling dates and timezone format
@@ -50,3 +50,5 @@ Total amount at top is the aggregate of the total amounts from displayed orders 
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200908968-0f6ac297-809f-41e5-83c2-856864c37cd3.png">
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200909105-0479f696-f8a9-449c-9ea4-a32df9d38435.png">
 
+### Timezone Melbourne/Australia
+<img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200910368-c45cbc5a-3c08-4b27-b4b5-df4e9f8545b2.png">
