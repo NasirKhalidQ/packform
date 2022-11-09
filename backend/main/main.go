@@ -43,15 +43,15 @@ func GetOrders(c *gin.Context) {
 	}
 
 	baseQuery := `
-	SELECT o.order_name, oi.product, 
-	cc.company_name, cu.name,  
-	o.created_at, 
+	SELECT o.order_name, oi.product,
+	cc.company_name, cu.name,
+	o.created_at,
 	oi.price_per_unit * oi.quantity AS total_amount, d.delivered_quantity * oi.price_per_unit AS delivered_amount,
-	COUNT(*) OVER() AS rows
+	COUNT(*) OVER()
 
 	FROM orders o LEFT JOIN customers cu ON o.customer_id = cu.user_id
-	LEFT JOIN customer_companies cc ON cu.company_id = cc.company_id 
-	LEFT JOIN order_items oi ON o.id = oi.order_id 
+	LEFT JOIN customer_companies cc ON cu.company_id = cc.company_id
+	LEFT JOIN order_items oi ON o.id = oi.order_id
 	LEFT JOIN deliveries d ON d.order_item_id = oi.id
 	`
 
@@ -72,7 +72,7 @@ func GetOrders(c *gin.Context) {
 	s := make([]Order, 0)
 
 	baseQuery += `
-	ORDER BY o.order_name, oi.product 
+	ORDER BY o.order_name, oi.product
 	`
 
 	if offset != "" {
