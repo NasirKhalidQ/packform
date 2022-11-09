@@ -6,8 +6,8 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 
 - [NextJS](https://nextjs.org) with [Typescript](https://www.typescriptlang.org)
 - [Antd](https://ant.design/components/overview/) as component library
-- [React-Query](https://github.com/fkhadra/react-toastify) for data fetching, handling pagination, keyword search
-- [MomentJS](https://github.com/alampros/react-confetti) for handling dates and timezone format
+- [React-Query](https://react-query-v3.tanstack.com/) for data fetching, handling pagination, keyword search
+- [MomentJS](https://momentjs.com/timezone/) for handling dates and timezone format
 
 ## Tasks Completed ✅
 
