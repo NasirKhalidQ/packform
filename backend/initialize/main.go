@@ -15,6 +15,7 @@ func InitializeDb() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	baseQuery := `
 	DROP TABLE IF EXISTS customer_companies;
 	CREATE TABLE customer_companies
@@ -31,8 +32,31 @@ func InitializeDb() {
 	FROM '/Users/nasirkhalid/Desktop/packform/backend/initialize/deliveries.csv'
 	DELIMITER ','
 	CSV HEADER;
-	`
 
+	DROP TABLE IF EXISTS orders;
+	CREATE TABLE orders
+	(id integer NOT NULL PRIMARY KEY, created_at date, order_name varchar, customer_id varchar);
+	COPY orders(id, created_at, order_name, customer_id)
+	FROM '/Users/nasirkhalid/Desktop/packform/backend/initialize/orders.csv'
+	DELIMITER ','
+	CSV HEADER;
+
+	DROP TABLE IF EXISTS order_items;
+	CREATE TABLE order_items
+	(id integer NOT NULL PRIMARY KEY, order_id integer, price_per_unit numeric, quantity integer, product varchar);
+	COPY order_items(id, order_id, price_per_unit, quantity, product)
+	FROM '/Users/nasirkhalid/Desktop/packform/backend/initialize/order_items.csv'
+	DELIMITER ','
+	CSV HEADER;
+
+	DROP TABLE IF EXISTS customers;
+	CREATE TABLE customers
+	(user_id varchar NOT NULL PRIMARY KEY, login varchar, password varchar, name varchar, company_id integer, credit_cards varchar []);
+	COPY customers(user_id, login, password, name, company_id, credit_cards)
+	FROM '/Users/nasirkhalid/Desktop/packform/backend/initialize/customers.csv'
+	DELIMITER ','
+	CSV HEADER;
+	`
 	db.Query(baseQuery)
 }
 
