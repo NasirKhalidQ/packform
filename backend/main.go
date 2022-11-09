@@ -108,6 +108,7 @@ func GetOrders(c *gin.Context) {
 			Delivered_amount: delivered_amount})
 
 	}
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 
 	c.JSON(200, gin.H{
 		"orders": s,
