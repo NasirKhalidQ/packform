@@ -1,8 +1,12 @@
-import { DatePicker, Form, Input, Table, Typography } from "antd";
+import { DatePicker, Form, Input, Space, Table, Tag, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Head from "next/head";
+import moment from "moment-timezone";
+import { RangePickerProps } from "antd/lib/date-picker/generatePicker";
+moment.tz.setDefault("Australia/Melbourne");
 
 export default function Home() {
+  const onChange: RangePickerProps<any>["onChange"] = (date, dateString) => {};
   interface IOrders {
     Order_name: string;
     Product: string;
@@ -29,11 +33,55 @@ export default function Home() {
   const columns: ColumnsType<IOrders> = [
     {
       title: "Order name",
-      dataIndex: "Order_name",
       key: "Order_name",
-      render: (text) => <Typography.Paragraph>{text}</Typography.Paragraph>,
+      render: ({ Order_name, Product }: IOrders) => (
+        <Typography.Paragraph>
+          {Order_name}, {Product}
+        </Typography.Paragraph>
+      ),
+    },
+    {
+      title: "Customer Company",
+      dataIndex: "Company_name",
+      key: "Order_name",
+      render: (text: IOrders["Company_name"]) => (
+        <Typography.Paragraph>{text}</Typography.Paragraph>
+      ),
+    },
+    {
+      title: "Customer name",
+      dataIndex: "Name",
+      key: "Order_name",
+      render: (text: IOrders["Name"]) => (
+        <Typography.Paragraph>{text}</Typography.Paragraph>
+      ),
+    },
+    {
+      title: "Order date",
+      dataIndex: "Created_at",
+      key: "Order_name",
+      render: (text: IOrders["Created_at"]) => (
+        <Typography.Paragraph>{text}</Typography.Paragraph>
+      ),
+    },
+    {
+      title: "Delivered Amount",
+      dataIndex: "Delivered_amount",
+      key: "Order_name",
+      render: (text: IOrders["Delivered_amount"]) => (
+        <Tag color="green">${text.toFixed(2)}</Tag>
+      ),
+    },
+    {
+      title: "Total Amount",
+      dataIndex: "Total_amount",
+      key: "Order_name",
+      render: (text: IOrders["Total_amount"]) => (
+        <Tag color="cyan">${text.toFixed(2)}</Tag>
+      ),
     },
   ];
+
   return (
     <div>
       <Head>
@@ -49,12 +97,17 @@ export default function Home() {
         </div>
         <div>
           <Typography.Paragraph>Created Date</Typography.Paragraph>
-          <DatePicker.RangePicker />
+          <DatePicker.RangePicker onChange={onChange} />
         </div>
         <div>
           <Typography.Paragraph>Total Amount</Typography.Paragraph>
         </div>
-        <Table columns={columns} dataSource={data} />
+        <Table
+          columns={columns}
+          dataSource={data}
+          rowKey="Order_name"
+          pagination={{ showSizeChanger: false }}
+        />
       </Form>
     </div>
   );
