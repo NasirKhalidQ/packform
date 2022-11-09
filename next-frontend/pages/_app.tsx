@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import "antd/dist/antd.css";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 

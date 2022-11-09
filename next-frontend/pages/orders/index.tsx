@@ -1,10 +1,9 @@
 import {
-  Alert,
   DatePicker,
   Form,
   Input,
   notification,
-  Space,
+  Row,
   Table,
   Tag,
   Typography,
@@ -15,6 +14,8 @@ import moment from "moment-timezone";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { useState } from "react";
+import styles from "../../styles/Orders.module.css";
+
 moment.tz.setDefault("Australia/Melbourne");
 
 interface IOrders {
@@ -35,8 +36,12 @@ export default function Orders() {
   const dates = Form.useWatch("dates", form);
 
   async function getUser() {
-    const startDate = moment(dates?.[0]).format("YYYY-MM-DD");
-    const endDate = moment(dates?.[1]).format("YYYY-MM-DD");
+    const startDate = dates?.[0]
+      ? moment(dates?.[0]).format("YYYY-MM-DD")
+      : "2020-01-01";
+    const endDate = dates?.[1]
+      ? moment(dates?.[1]).format("YYYY-MM-DD")
+      : "2022-01-01";
     try {
       const response = await axios({
         url: "http://localhost:8080/orders",
@@ -119,31 +124,36 @@ export default function Orders() {
   ];
 
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Packform Australia</title>
         <meta name="description" content="Test task for Packform Australia" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Form
-        form={form}
-        initialValues={{ dates: [moment("2000-01-01"), moment("2022-01-01")] }}
-      >
+      <Form form={form}>
         <div>
-          <Typography.Title>Search</Typography.Title>
+          <Row style={{ placeItems: "baseline", gap: "16px" }}>
+            <img
+              src="https://uxwing.com/wp-content/themes/uxwing/download/user-interface/search-icon.png"
+              alt="search"
+              width={30}
+              height={30}
+            />
+            <Typography.Title>Search</Typography.Title>
+          </Row>
           <Form.Item name="keyword">
             <Input size="large" />
           </Form.Item>
         </div>
         <div>
-          <Typography.Paragraph>Created Date</Typography.Paragraph>
+          <Typography.Title level={5}>Created Date</Typography.Title>
           <Form.Item name="dates">
             <DatePicker.RangePicker />
           </Form.Item>
         </div>
         <div>
-          <Typography.Paragraph>
+          <Typography.Title level={5} style={{ display: "flex", gap: "6px" }}>
             Total Amount:
             {ordersResult?.data?.data?.orders.length > 0 ? (
               <Tag color="magenta">
@@ -155,7 +165,7 @@ export default function Orders() {
                   .toFixed(2)}
               </Tag>
             ) : null}
-          </Typography.Paragraph>
+          </Typography.Title>
         </div>
         <Table
           columns={columns}
