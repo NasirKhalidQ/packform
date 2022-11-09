@@ -1,9 +1,20 @@
-import { DatePicker, Form, Input, Space, Table, Tag, Typography } from "antd";
+import {
+  Alert,
+  DatePicker,
+  Form,
+  Input,
+  notification,
+  Space,
+  Table,
+  Tag,
+  Typography,
+} from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Head from "next/head";
 import moment from "moment-timezone";
 import axios from "axios";
 import { useQuery } from "react-query";
+import { useState } from "react";
 moment.tz.setDefault("Australia/Melbourne");
 
 interface IOrders {
@@ -18,7 +29,7 @@ interface IOrders {
 
 export default function Home() {
   const [form] = Form.useForm();
-  const currentPage = 1;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const keyword = Form.useWatch("keyword", form);
   const dates = Form.useWatch("dates", form);
@@ -26,7 +37,6 @@ export default function Home() {
   async function getUser() {
     const startDate = moment(dates?.[0]).format("YYYY-MM-DD");
     const endDate = moment(dates?.[1]).format("YYYY-MM-DD");
-    console.log(startDate, endDate);
     try {
       const response = await axios({
         url: "http://localhost:8080/orders",
@@ -35,14 +45,26 @@ export default function Home() {
           keyword,
           startDate,
           endDate,
+          offset: currentPage - 1,
         },
       });
+
       return response;
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      notification.error({
+        message: "Error",
+        description: error.message,
+        placement: "bottomRight",
+        maxCount: 3,
+        duration: 3,
+      });
     }
   }
-  const ordersResult = useQuery(["orders", keyword, dates], getUser);
+  const ordersResult = useQuery(
+    ["orders", keyword, dates, currentPage],
+    getUser,
+    { keepPreviousData: true }
+  );
 
   const columns: ColumnsType<IOrders> = [
     {
@@ -134,6 +156,10 @@ export default function Home() {
             total: ordersResult?.data?.data?.rows,
             pageSize: 5,
             current: currentPage,
+            onChange: (page) => setCurrentPage(page),
+            position: ["bottomCenter"],
+            showTotal: (total, range) =>
+              `${range[0]}-${range[1]} of ${total} items`,
           }}
           loading={ordersResult.isLoading}
         />
