@@ -2,14 +2,12 @@
 
 This assessment is a part of the hiring process at Packform for the full-stack software dev position.
 
-
 ## Libraries/Framework used 📚
 
 - [NextJS](https://nextjs.org) with [Typescript](https://www.typescriptlang.org)💪
 - [Antd](https://ant.design/components/overview/) as component library
 - [React-Query](https://react-query-v3.tanstack.com/) for data fetching, handling pagination, keyword search
 - [MomentJS](https://momentjs.com/timezone/) for handling dates and timezone format
-
 
 ## Tasks Completed ✅
 
@@ -21,19 +19,15 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 - Details displayed for each order; Order name, Customer Company name , Customer name, Order date (Melbourne/Australia TZ), Delivered amount (dash if nothing is delivered) , Total amount
 - Keyword has been debounced at 500ms to avoid server crashing from concurrent http requests
 
-
 ## Not Completed / Work In Progress ❌
 
 - Using VueJS for frontend intead of React/NextJS
 
-
 ## Demo:
-
 
 ### Main Page
 
 Main page with route "/" redirects to "/orders"
-
 
 ### Orders Page
 
@@ -92,23 +86,30 @@ You will see this error as backend is not setup yet
 
 - Install PostgresAPP from [https://postgresapp.com/](https://postgresapp.com/)
 - Launch PostgresAPP, click on initialize to initialize a db with your computer username as the database, then click start to start the server for Postgres
+
 <img width="718" alt="image" src="https://user-images.githubusercontent.com/75773436/200918140-c8b8dca3-a71b-46db-b863-41fe83d075f6.png">
+
 - These are the default settings for Postgres
+
 <img width="759" alt="image" src="https://user-images.githubusercontent.com/75773436/200918486-cda68afe-0104-4ea0-b45b-9b530a018316.png">
+
 - psql comes bundled with PostgresAPP but you need to set the path using
-`sudo mkdir -p /etc/paths.d &&
-echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
+  `sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
 - Check if it is installed by typing `psql` in the terminal, you should see this if path was successfully set:
+
 <img width="986" alt="image" src="https://user-images.githubusercontent.com/75773436/200917733-2ed4bc79-6446-491a-9d6c-96ce8f53c9b9.png">
+
 - Optional--Install pgadmin4 from [https://www.pgadmin.org/](https://www.pgadmin.org/) if you would prefer a GUI to see/drop the tables and make queries directly for testing
 - Download and install GO from [https://go.dev/doc/install](https://go.dev/doc/install)
-- Verify GO is installed by running `go --version` in terminal, you should see something like this 
+- Verify GO is installed by running `go --version` in terminal, you should see something like this
+
 <img width="984" alt="image" src="https://user-images.githubusercontent.com/75773436/200920251-e94e60e2-f321-41c9-8ad2-8e3f02839da1.png">
-- Close VScode and relaunch it, open the backend directory as workspace inside packform folder
+
+- Relaunch VScode, open the backend directory as workspace inside packform folder
 - You might see some prompts/errors in VScode as files might be missing, accept all to fix those errors
 - Run this command to get all packages `go get`, then run `go mod tidy`
 - Run this command to start the server `go run main.go`, this will initialize the database by creating tables and populating them with the data from the csv file included in the initialize folder, then it will start listening on port 8080 for incoming http requests
-<img width="1103" alt="image" src="https://user-images.githubusercontent.com/75773436/200922214-0b493c70-6a67-4525-87fb-25a3e8ced7b8.png">
+  <img width="1103" alt="image" src="https://user-images.githubusercontent.com/75773436/200922214-0b493c70-6a67-4525-87fb-25a3e8ced7b8.png">
 
 Verify if everything was setup and server is returning json responses by testing a GET request using Postman with query params
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200922581-e5786286-e2e9-4976-9bf0-0b470010e92f.png">
@@ -117,4 +118,3 @@ All fields are optional and results will still be returned if params are omitted
 <img width="1440" alt="image" src="https://user-images.githubusercontent.com/75773436/200922757-2ea62ae1-c6b5-4fc8-a5ab-a3ab03773474.png">
 
 Thank you for reading all the way down!! 👍
-
