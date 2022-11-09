@@ -2,10 +2,8 @@ import { DatePicker, Form, Input, Space, Table, Tag, Typography } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Head from "next/head";
 import moment from "moment-timezone";
-import { RangePickerProps } from "antd/lib/date-picker/generatePicker";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { useEffect } from "react";
 moment.tz.setDefault("Australia/Melbourne");
 
 interface IOrders {
@@ -20,14 +18,10 @@ interface IOrders {
 
 export default function Home() {
   const [form] = Form.useForm();
+  const currentPage = 1;
 
-  const onChange: RangePickerProps<any>["onChange"] = (date, dateString) => {};
   const keyword = Form.useWatch("keyword", form);
   const dates = Form.useWatch("dates", form);
-
-  useEffect(() => {
-    console.log(dates);
-  }, [dates]);
 
   async function getUser() {
     const startDate = moment(dates?.[0]).format("YYYY-MM-DD");
@@ -81,7 +75,9 @@ export default function Home() {
       dataIndex: "Created_at",
       key: "Order_name",
       render: (text: IOrders["Created_at"]) => (
-        <Typography.Paragraph>{text}</Typography.Paragraph>
+        <Typography.Paragraph>
+          {moment(text).format("MMM Do, h:mm A")}
+        </Typography.Paragraph>
       ),
     },
     {
@@ -133,7 +129,12 @@ export default function Home() {
             ordersResult.isSuccess ? ordersResult.data?.data?.orders : []
           }
           rowKey="Order_name"
-          pagination={{ showSizeChanger: false }}
+          pagination={{
+            showSizeChanger: false,
+            total: ordersResult?.data?.data?.rows,
+            pageSize: 5,
+            current: currentPage,
+          }}
           loading={ordersResult.isLoading}
         />
       </Form>
