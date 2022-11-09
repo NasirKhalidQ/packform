@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/NasirKhalidQ/packform/initialize"
 	"github.com/gin-gonic/gin"
 
 	"database/sql"
@@ -121,6 +122,8 @@ func GetOrders(c *gin.Context) {
 }
 
 func main() {
+	initialize.InitializeDb()
+
 	r := gin.Default()
 	r.GET("/orders", GetOrders)
 	r.Run()

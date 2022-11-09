@@ -1,4 +1,4 @@
-package main
+package initialize
 
 import (
 	"log"
@@ -58,8 +58,4 @@ func InitializeDb() {
 	CSV HEADER;
 	`
 	db.Query(baseQuery)
-}
-
-func main() {
-	InitializeDb()
 }
