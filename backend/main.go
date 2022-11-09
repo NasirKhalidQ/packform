@@ -3,13 +3,15 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/NasirKhalidQ/packform/initialize"
 	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 
 	"database/sql"
 
-	_ "github.com/lib/pq"
+	"github.com/joho/godotenv"
 )
 
 func GetOrders(c *gin.Context) {
@@ -28,9 +30,14 @@ func GetOrders(c *gin.Context) {
 	endDateString += endDate
 	endDateString += "'"
 
+	// get database connection string from .env file
+	envError := godotenv.Load((".env"))
+	if envError != nil {
+		fmt.Printf("Could not load env file")
+		os.Exit(1)
+	}
 	// connect to db
-	connStr := "user=nasirkhalid dbname=nasirkhalid host=localhost sslmode=disable"
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatal(err)
 	}
