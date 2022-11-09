@@ -2,7 +2,6 @@
 
 This assessment is a part of the hiring process at Packform for the full-stack software dev position.
 
-<br>
 
 ## Libraries/Framework used 📚
 
@@ -11,7 +10,6 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 - [React-Query](https://react-query-v3.tanstack.com/) for data fetching, handling pagination, keyword search
 - [MomentJS](https://momentjs.com/timezone/) for handling dates and timezone format
 
-<br>
 
 ## Tasks Completed ✅
 
@@ -23,23 +21,19 @@ This assessment is a part of the hiring process at Packform for the full-stack s
 - Details displayed for each order; Order name, Customer Company name , Customer name, Order date (Melbourne/Australia TZ), Delivered amount (dash if nothing is delivered) , Total amount
 - Keyword has been debounced at 500ms to avoid server crashing from concurrent requests
 
-<br>
 
 ## Not Completed / Work In Progress ❌
 
 - Using VueJS for frontend intead of React/NextJS
 
-<br>
 
 ## Demo:
 
-<br>
 
 ### Main Page
 
 Main page with route "/" redirects to "/orders"
 
-<br>
 
 ### Orders Page
 
@@ -97,7 +91,7 @@ You will see this error as backend is not setup yet
 ## Backend-- PostgreSQL with GO 😨
 
 - Install PostgresAPP from [https://postgresapp.com/](https://postgresapp.com/)
-- Click on initialize to initialize a db with your username as the database, then click start to start the server for Postgres
+- Launch PostgresAPP, click on initialize to initialize a db with your computer username as the database, then click start to start the server for Postgres
 <img width="718" alt="image" src="https://user-images.githubusercontent.com/75773436/200918140-c8b8dca3-a71b-46db-b863-41fe83d075f6.png">
 - These are the default settings for Postgres
 <img width="759" alt="image" src="https://user-images.githubusercontent.com/75773436/200918486-cda68afe-0104-4ea0-b45b-9b530a018316.png">
