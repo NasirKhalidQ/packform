@@ -2,7 +2,7 @@
 
 This assessment is a part of the hiring process at Packform for the full-stack software dev position.
 
-## Libraries used 📚
+## Libraries/Framework used 📚
 
 - [NextJS](https://nextjs.org) with [Typescript](https://www.typescriptlang.org)💪
 - [Antd](https://ant.design/components/overview/) as component library
