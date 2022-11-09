@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import {
+  Col,
   DatePicker,
   Form,
   Input,
@@ -81,9 +82,16 @@ export default function Orders() {
       title: "Order name",
       key: "Order_name",
       render: ({ Order_name, Product }: IOrders) => (
-        <Typography.Paragraph>
-          {Order_name}, {Product}
-        </Typography.Paragraph>
+        <>
+          <Row>
+            <Typography.Text>{Order_name}</Typography.Text>
+          </Row>
+          <Row>
+            <Typography.Text style={{ color: "gray" }}>
+              {Product}
+            </Typography.Text>
+          </Row>
+        </>
       ),
     },
     {
