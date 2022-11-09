@@ -13,20 +13,22 @@ import (
 )
 
 func GetOrders(c *gin.Context) {
+	// get url query parameters
 	keyword := c.Query("keyword")
 	offset := c.Query(("offset"))
 	startDate := c.Query(("startDate"))
+	endDate := c.Query(("endDate"))
 
+	// concatenate for date query
 	startDateString := "'"
 	startDateString += startDate
 	startDateString += "'"
-
-	endDate := c.Query(("endDate"))
 
 	endDateString := "'"
 	endDateString += endDate
 	endDateString += "'"
 
+	// connect to db
 	connStr := "user=nasirkhalid dbname=nasirkhalid host=localhost sslmode=disable"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
@@ -58,6 +60,7 @@ func GetOrders(c *gin.Context) {
 
 	params := []interface{}{}
 
+	// make query params optional by setting a default date if none given
 	if startDate != "" && endDate != "" {
 		baseQuery += fmt.Sprintf(` WHERE o.created_at >= $%d AND o.created_at <= $%d`, len(params)+1, len(params)+2)
 		params = append(params, startDateString, endDateString)
@@ -83,8 +86,10 @@ func GetOrders(c *gin.Context) {
 		baseQuery += ` OFFSET 0 LIMIT 5`
 	}
 
+	// spread params on base query string
 	rows, err := db.Query(baseQuery, params...)
 
+	// total variable to handle pagination on frontend
 	var total int64 = 0
 	for rows.Next() {
 		var order_name string
@@ -112,6 +117,7 @@ func GetOrders(c *gin.Context) {
 	}
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 
+	// return response as json
 	c.JSON(200, gin.H{
 		"orders": s,
 		"rows":   total,
@@ -122,6 +128,7 @@ func GetOrders(c *gin.Context) {
 }
 
 func main() {
+	// populate db from csv file
 	initialize.InitializeDb()
 
 	r := gin.Default()
