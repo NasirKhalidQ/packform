@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import {
-  Col,
   DatePicker,
   Form,
   Input,
