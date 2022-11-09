@@ -3,33 +3,53 @@ import { ColumnsType } from "antd/lib/table";
 import Head from "next/head";
 import moment from "moment-timezone";
 import { RangePickerProps } from "antd/lib/date-picker/generatePicker";
+import axios from "axios";
+import { useQuery } from "react-query";
+import { useEffect } from "react";
 moment.tz.setDefault("Australia/Melbourne");
 
+interface IOrders {
+  Order_name: string;
+  Product: string;
+  Company_name: string;
+  Name: string;
+  Created_at: string;
+  Total_amount: number;
+  Delivered_amount: number;
+}
+
 export default function Home() {
-  const onChange: RangePickerProps<any>["onChange"] = (date, dateString) => {};
-  interface IOrders {
-    Order_name: string;
-    Product: string;
-    Company_name: string;
-    Name: string;
-    Created_at: string;
-    Total_amount: number;
-    Delivered_amount: number;
-  }
-
-  const data = [
-    {
-      Order_name: "PO #001-I",
-      Product: "Corrugated Box",
-      Company_name: "Roga & Kopyta",
-      Name: "Ivan Ivanovich",
-      Created_at: "2020-01-02T00:00:00Z",
-      Total_amount: 13.454,
-      Delivered_amount: 6.727,
-    },
-  ];
-
   const [form] = Form.useForm();
+
+  const onChange: RangePickerProps<any>["onChange"] = (date, dateString) => {};
+  const keyword = Form.useWatch("keyword", form);
+  const dates = Form.useWatch("dates", form);
+
+  useEffect(() => {
+    console.log(dates);
+  }, [dates]);
+
+  async function getUser() {
+    const startDate = moment(dates?.[0]).format("YYYY-MM-DD");
+    const endDate = moment(dates?.[1]).format("YYYY-MM-DD");
+    console.log(startDate, endDate);
+    try {
+      const response = await axios({
+        url: "http://localhost:8080/orders",
+        method: "get",
+        params: {
+          keyword,
+          startDate,
+          endDate,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  const ordersResult = useQuery(["orders", keyword, dates], getUser);
+
   const columns: ColumnsType<IOrders> = [
     {
       title: "Order name",
@@ -68,17 +88,15 @@ export default function Home() {
       title: "Delivered Amount",
       dataIndex: "Delivered_amount",
       key: "Order_name",
-      render: (text: IOrders["Delivered_amount"]) => (
-        <Tag color="green">${text.toFixed(2)}</Tag>
-      ),
+      render: (text: IOrders["Delivered_amount"]) =>
+        text ? <Tag color="green">${text?.toFixed(2)}</Tag> : "-",
     },
     {
       title: "Total Amount",
       dataIndex: "Total_amount",
       key: "Order_name",
-      render: (text: IOrders["Total_amount"]) => (
-        <Tag color="cyan">${text.toFixed(2)}</Tag>
-      ),
+      render: (text: IOrders["Total_amount"]) =>
+        text ? <Tag color="cyan">${text?.toFixed(2)}</Tag> : "-",
     },
   ];
 
@@ -90,23 +108,33 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Form form={form}>
+      <Form
+        form={form}
+        initialValues={{ dates: [moment("2000-01-01"), moment("2022-01-01")] }}
+      >
         <div>
           <Typography.Title>Search</Typography.Title>
-          <Input size="large" />
+          <Form.Item name="keyword">
+            <Input size="large" />
+          </Form.Item>
         </div>
         <div>
           <Typography.Paragraph>Created Date</Typography.Paragraph>
-          <DatePicker.RangePicker onChange={onChange} />
+          <Form.Item name="dates">
+            <DatePicker.RangePicker />
+          </Form.Item>
         </div>
         <div>
-          <Typography.Paragraph>Total Amount</Typography.Paragraph>
+          <Typography.Paragraph>Total Amount: </Typography.Paragraph>
         </div>
         <Table
           columns={columns}
-          dataSource={data}
+          dataSource={
+            ordersResult.isSuccess ? ordersResult.data?.data?.orders : []
+          }
           rowKey="Order_name"
           pagination={{ showSizeChanger: false }}
+          loading={ordersResult.isLoading}
         />
       </Form>
     </div>
