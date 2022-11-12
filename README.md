@@ -110,7 +110,7 @@ You will see this error as backend is not setup yet
 - Relaunch VScode, open the backend directory as workspace inside packform folder
 - You might see some prompts/errors in VScode as files might be missing, accept all to fix those errors
 - Run this command to get all packages `go get`, then run `go mod tidy`
-- Change the DATABASE_URL to use your username as user and dbname
+- Change the DATABASE_URL to use your username as user and dbname in the .env file
 
 <img width="1474" alt="image" src="https://user-images.githubusercontent.com/75773436/200929347-20eac8e8-1877-4753-939b-f90bd8b0e8a7.png">
 
