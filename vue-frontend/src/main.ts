@@ -5,6 +5,8 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
 import "./assets/main.css";
 
 const vuetify = createVuetify({
@@ -13,6 +15,7 @@ const vuetify = createVuetify({
 });
 const app = createApp(App);
 
+app.component("Datepicker", Datepicker);
 app.use(router);
 app.use(vuetify);
 
