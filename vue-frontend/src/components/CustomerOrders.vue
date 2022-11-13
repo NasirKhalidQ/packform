@@ -1,29 +1,41 @@
 <script lang="ts">
 import Datepicker from "@vuepic/vue-datepicker";
+import axios from "axios";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { ref } from "vue";
+
+interface IOrders {
+  Order_name: string;
+  Product: string;
+  Company_name: string;
+  Name: string;
+  Created_at: string;
+  Total_amount: number;
+  Delivered_amount: number;
+}
 
 export default {
   components: { Datepicker },
   setup() {
     const date = ref(new Date());
 
-    const orders = [
-      {
-        Order_name: "PO #001-I",
-        Product: "Corrugated Box",
-        Company_name: "Roga & Kopyta",
-        Name: "Ivan Ivanovich",
-        Created_at: "Jan 2nd, 11:00 AM",
-        Total_amount: "6.73",
-        Delivered_amount: "13.45",
-      },
-    ];
+    const orders = [] as IOrders[];
 
     return {
       date,
       orders,
     };
+  },
+  methods: {
+    async fetchOrders() {
+      const ordersResponse = await axios.get(
+        import.meta.env.VITE_BASE_URL + "/orders"
+      );
+      this.orders = ordersResponse.data.orders;
+    },
+  },
+  async mounted() {
+    await this.fetchOrders();
   },
 };
 </script>
