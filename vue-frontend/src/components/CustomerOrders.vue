@@ -2,6 +2,7 @@
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { ref } from "vue";
+import axios from "axios";
 
 interface IOrders {
   Order_name: string;
@@ -19,10 +20,12 @@ export default {
     const date = ref(new Date());
 
     const orders = [] as IOrders[];
+    const keyword = "";
 
     return {
       date,
       orders,
+      keyword,
     };
   },
   methods: {
@@ -30,9 +33,21 @@ export default {
       await fetch(import.meta.env.VITE_BASE_URL + "/orders").then((res) =>
         res.json().then((res) => (this.orders = res.orders))
       );
+      const response = await axios({
+        url: `${import.meta.env.VITE_BASE_URL}/orders`,
+        method: "get",
+        params: {
+          keyword: this.keyword,
+          // startDate,
+          // endDate,
+          // offset: (currentPage - 1) * 5,
+        },
+      });
+      this.orders = response.data.orders;
     },
   },
-  async mounted() {
+
+  async updated() {
     await this.fetchOrders();
   },
 };
@@ -52,7 +67,7 @@ export default {
       <h2>Search</h2>
     </v-col>
   </v-row>
-  <v-text-field variant="outlined" />
+  <v-text-field variant="outlined" v-model="keyword" />
   <h6 class="text-h6">Created Date</h6>
   <v-row>
     <v-col :cols="3">
