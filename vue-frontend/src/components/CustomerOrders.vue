@@ -1,6 +1,5 @@
 <script lang="ts">
 import Datepicker from "@vuepic/vue-datepicker";
-import axios from "axios";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { ref } from "vue";
 
@@ -16,7 +15,7 @@ interface IOrders {
 
 export default {
   components: { Datepicker },
-  setup() {
+  data() {
     const date = ref(new Date());
 
     const orders = [] as IOrders[];
@@ -28,10 +27,9 @@ export default {
   },
   methods: {
     async fetchOrders() {
-      const ordersResponse = await axios.get(
-        import.meta.env.VITE_BASE_URL + "/orders"
+      await fetch(import.meta.env.VITE_BASE_URL + "/orders").then((res) =>
+        res.json().then((res) => (this.orders = res.orders))
       );
-      this.orders = ordersResponse.data.orders;
     },
   },
   async mounted() {
@@ -79,7 +77,7 @@ export default {
       </tr>
     </thead>
     <tbody>
-      <tr v-for="order in orders" :key="order.Total_amount">
+      <tr v-for="order in orders" v-bind:key="order.Total_amount">
         <td>
           <v-row>
             <v-col :cols="12">
