@@ -20,12 +20,16 @@ export default {
     const date = ref(new Date());
 
     const orders = [] as IOrders[];
+    const page = 1;
+    const rows = 5;
     const keyword = "";
 
     return {
       date,
       orders,
       keyword,
+      page,
+      rows,
     };
   },
   methods: {
@@ -40,10 +44,11 @@ export default {
           keyword: this.keyword,
           // startDate,
           // endDate,
-          // offset: (currentPage - 1) * 5,
+          offset: (this.page - 1) * 5,
         },
       });
       this.orders = response.data.orders;
+      this.rows = response.data.rows;
     },
   },
 
@@ -111,4 +116,11 @@ export default {
       </tr>
     </tbody>
   </v-table>
+  <v-pagination
+    variant="outlined"
+    v-model="page"
+    :length="Math.ceil(rows / 5)"
+    first-icon="Prev"
+    last-icon="Next"
+  />
 </template>
