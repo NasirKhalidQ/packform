@@ -24,6 +24,7 @@ UPDATE--Site is now live at [https://packform.vercel.app](https://packform.verce
 ## Not Completed / Work In Progress ❌
 
 - Using VueJS for frontend intead of React/NextJS
+- Deployed at https://packform-australia-vue.vercel.app
 
 ## Demo:
 
