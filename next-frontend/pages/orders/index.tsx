@@ -12,14 +12,16 @@ import {
 } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import Head from "next/head";
-import moment from "moment-timezone";
 import axios from "axios";
 import { useQuery } from "react-query";
 import { useState } from "react";
 import styles from "../../styles/Orders.module.css";
 import { useDebounce } from "../../hooks";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+dayjs.extend(timezone);
 
-moment.tz.setDefault("Australia/Melbourne");
+dayjs.tz.setDefault("Australia/Melbourne");
 
 interface IOrders {
   Order_name: string;
@@ -41,11 +43,12 @@ export default function Orders() {
   const dates = Form.useWatch("dates", form);
 
   async function getUser() {
+    console.log(dates[0]);
     const startDate = dates?.[0]
-      ? moment(dates?.[0]).format("YYYY-MM-DD")
+      ? dayjs(dates?.[0]).format("YYYY-MM-DD")
       : "2020-01-01";
     const endDate = dates?.[1]
-      ? moment(dates?.[1]).format("YYYY-MM-DD")
+      ? dayjs(dates?.[1]).format("YYYY-MM-DD")
       : "2022-01-01";
     try {
       const response = await axios({
@@ -65,7 +68,6 @@ export default function Orders() {
         message: "Error",
         description: error.message,
         placement: "bottomRight",
-        maxCount: 3,
         duration: 3,
       });
     }
@@ -115,7 +117,7 @@ export default function Orders() {
       key: "Order_name",
       render: (text: IOrders["Created_at"]) => (
         <Typography.Paragraph>
-          {moment(text).format("MMM Do, h:mm A")}
+          {dayjs(text).format("MMM Do, h:mm A")}
         </Typography.Paragraph>
       ),
     },
@@ -143,7 +145,15 @@ export default function Orders() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Form form={form}>
+      <Form
+        form={form}
+        initialValues={{
+          dates: [
+            dayjs("2019/01/01", "YYYY-MM-DD"),
+            dayjs("2022/01/01", "YYYY-MM-DD"),
+          ],
+        }}
+      >
         <div>
           <Row style={{ placeItems: "baseline", gap: "16px" }}>
             <img
