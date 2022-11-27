@@ -111,8 +111,10 @@ export default {
         <td>{{ order.Company_name }}</td>
         <td>{{ order.Name }}</td>
         <td>{{ order.Created_at }}</td>
-        <td>${{ order.Delivered_amount }}</td>
-        <td>${{ order.Total_amount }}</td>
+        <td v-if="order.Delivered_amount">${{ order.Delivered_amount }}</td>
+        <td v-else>-</td>
+        <td v-if="order.Total_amount">${{ order.Total_amount }}</td>
+        <td v-else>-</td>
       </tr>
     </tbody>
   </v-table>
